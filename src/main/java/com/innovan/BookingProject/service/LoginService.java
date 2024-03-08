@@ -12,13 +12,20 @@ public class LoginService {
     @Autowired
     LoginRepo loginRepo;
 
-    public void add(UserLogin userLogin){
+    public String add (UserLogin userLogin) {
+
+        if (loginRepo.existsByEmail(userLogin.getEmail())) {
+            return "Email already exists. Please choose another email.";
+        }
 
         loginRepo.save(userLogin);
 
+        return "Data added to the database successfully";
     }
 
     public Optional<UserLogin> findByUsernameAndPassword(String username, String password) {
         return loginRepo.findByUsernameAndPassword(username, password);
     }
+
+
 }

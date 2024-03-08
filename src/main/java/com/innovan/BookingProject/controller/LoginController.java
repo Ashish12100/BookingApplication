@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class LoginController {
 
     @Autowired
@@ -18,10 +19,9 @@ public class LoginController {
     public String test(){
         return "fhj";
     }
-    @PostMapping("/add")
+    @PostMapping("/signup")
     public String add(@RequestBody UserLogin userLogin){
-        loginService.add(userLogin);
-        return "Success";
+        return loginService.add(userLogin);
     }
 
     @PostMapping("/login")
