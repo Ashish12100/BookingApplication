@@ -5,6 +5,7 @@ import com.innovan.BookingProject.repo.LoginRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,5 +28,27 @@ public class LoginService {
         return loginRepo.findByUsernameAndPassword(username, password);
     }
 
+    public List<UserLogin> getAllDetails(){
+        return loginRepo.findAll();
+    }
+
+    public String deleteById(String id){
+        loginRepo.deleteById(id);
+        return "Deleted";
+    }
+
+
+    public Optional<UserLogin> updateEntityById(String id, UserLogin userLogin){
+        Optional<UserLogin> existingId = loginRepo.findById(id);
+        if (existingId.isPresent()){
+            UserLogin userLoginToUpdate = existingId.get();
+            userLoginToUpdate.setUsername(userLogin.getUsername());
+            userLoginToUpdate.setEmail(userLogin.getEmail());
+            userLoginToUpdate.setPhone(userLogin.getPhone());
+            userLoginToUpdate.setPassword(userLogin.getPassword());
+            return Optional.of(loginRepo.save(userLoginToUpdate));
+        }
+    return Optional.empty();
+    }
 
 }

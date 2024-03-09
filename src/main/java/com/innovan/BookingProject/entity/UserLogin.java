@@ -8,19 +8,20 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document(collection = "LoginDetails")
 public class UserLogin {
-    @MongoId(FieldType.OBJECT_ID)
-    private String Id;
+   // @MongoId(FieldType.OBJECT_ID)
+    @Id
+    private String id;
     private String username;
     private String email;
     private Long phone;
     private String password;
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getUsername() {
@@ -56,7 +57,7 @@ public class UserLogin {
     }
 
     public UserLogin(String id, String username, String email, Long phone, String password) {
-        Id = id;
+        this.id = id;
         this.username = username;
         this.email = email;
         this.phone = phone;
