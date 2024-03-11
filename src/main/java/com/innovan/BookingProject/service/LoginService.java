@@ -10,35 +10,41 @@ import java.util.Optional;
 
 @Service
 public class LoginService {
-    @Autowired
-    LoginRepo loginRepo;
+            @Autowired
+            LoginRepo loginRepo;
 
-    public String add (UserLogin userLogin) {
+            //TO ADD THE DETAILS
+            public String add (UserLogin userLogin)
+            {
+                if (loginRepo.existsByEmail(userLogin.getEmail())) {
+                return "Email already exists. Please choose another email.";
+                }
+                loginRepo.save(userLogin);
+                return "Data added to the database successfully";
+                }
 
-        if (loginRepo.existsByEmail(userLogin.getEmail())) {
-            return "Email already exists. Please choose another email.";
+
+        //TO FIND DETAILS BY USERNAME AND PASSWORD
+        public Optional<UserLogin> findByUsernameAndPassword(String username, String password) {
+        return loginRepo.findByUsernameAndPassword(username, password);
         }
 
-        loginRepo.save(userLogin);
 
-        return "Data added to the database successfully";
-    }
-
-    public Optional<UserLogin> findByUsernameAndPassword(String username, String password) {
-        return loginRepo.findByUsernameAndPassword(username, password);
-    }
-
-    public List<UserLogin> getAllDetails(){
+        //TO GET ALL DETAILS IN THE DATABASE
+        public List<UserLogin> getAllDetails(){
         return loginRepo.findAll();
-    }
+        }
 
-    public String deleteById(String id){
+
+        //TO DELETE BY ID
+        public String deleteById(String id){
         loginRepo.deleteById(id);
         return "Deleted";
-    }
+         }
 
 
-    public Optional<UserLogin> updateEntityById(String id, UserLogin userLogin){
+        //TO UPDATE DETAILS BY ID
+        public Optional<UserLogin> updateById(String id, UserLogin userLogin){
         Optional<UserLogin> existingId = loginRepo.findById(id);
         if (existingId.isPresent()){
             UserLogin userLoginToUpdate = existingId.get();
@@ -47,8 +53,8 @@ public class LoginService {
             userLoginToUpdate.setPhone(userLogin.getPhone());
             userLoginToUpdate.setPassword(userLogin.getPassword());
             return Optional.of(loginRepo.save(userLoginToUpdate));
-        }
-    return Optional.empty();
-    }
+            }
+            return Optional.empty();
+            }
 
-}
+            }
