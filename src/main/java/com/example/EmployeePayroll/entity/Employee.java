@@ -1,9 +1,13 @@
 package com.example.EmployeePayroll.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import org.springframework.stereotype.Component;
 
 @Component
+@Entity
 public class Employee {
+    @Id
     private int empId;
     private String  name;
     private long number;
